@@ -47,7 +47,6 @@ export default function App() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [chatError, setChatError] = useState("");
-  const [mobileMenu, setMobileMenu] = useState(false);
   const [now, setNow] = useState(new Date());
   const [maximized, setMaximized] = useState(false);
 
@@ -59,7 +58,6 @@ export default function App() {
   const open = (name: WindowName) => {
     setActive(name);
     setOpenWindows((prev) => prev.includes(name) ? prev : [...prev, name]);
-    setMobileMenu(false);
   };
   const close = (name: WindowName) => {
     const next = openWindows.filter((item) => item !== name);
@@ -192,14 +190,13 @@ export default function App() {
       {active && <div className="window-controls"><button title="Minimize active window" aria-label="Minimize active window" onClick={() => close(active)}><Minimize2 size={15}/></button><button title="Toggle window size" aria-label="Toggle window size" onClick={() => setMaximized((value) => !value)}><Maximize2 size={15}/></button></div>}
     </div>
     <div className="desktop-hint"><span className="status-dot"/> Select an app to explore</div>
-    <nav className={\`dock \${mobileMenu ? "dock-open" : ""}\`} aria-label="Portfolio app dock">
-      <button className="dock-app" onClick={() => open("about")} aria-label="Home"><span className="dock-icon home-icon"><PanelsTopLeft size={27}/></span><span className="dock-label">Home</span></button>
-      <button className="dock-app" onClick={() => open("projects")} aria-label="Projects"><span className="dock-icon projects-icon"><Folder size={27}/></span><span className="dock-label">Projects</span></button>
-      <button className="dock-app" onClick={() => open("resume")} aria-label="Resume"><span className="dock-icon resume-icon"><FileText size={27}/></span><span className="dock-label">Resume</span></button>
-      <button className="dock-app" onClick={() => open("ask")} aria-label="AI assistant"><span className="dock-icon ask-icon"><Sparkles size={27}/></span><span className="dock-label">Ask AI</span></button>
-      <button className="dock-app" onClick={() => open("contact")} aria-label="Contact"><span className="dock-icon contact-icon"><Mail size={27}/></span><span className="dock-label">Contact</span></button>
-      <span className="dock-separator"/><button className="dock-app" onClick={() => setMobileMenu((value) => !value)} aria-label="Toggle menu"><span className="dock-icon menu-icon"><Search size={25}/></span><span className="dock-label">Menu</span></button>
-      {mobileMenu && <div className="dock-popup"><button onClick={openResume}><FileText size={17}/> Open resume</button><button onClick={() => window.open(links.github, "_blank", "noopener,noreferrer")}><Github size={17}/> GitHub profile</button><button onClick={() => open("contact")}><Mail size={17}/> Contact</button></div>}
+    <nav className="dock" aria-label="Portfolio app dock">
+      <button className="dock-app" onClick={() => open("projects")} aria-label="Finder - Projects" title="Finder · Projects"><span className="dock-icon home-icon"><PanelsTopLeft size={29}/></span><span className="dock-label">Finder</span></button>
+      <button className="dock-app" onClick={() => window.open("https://kartik-s-portfolio-tau.vercel.app/", "_blank", "noopener,noreferrer")} aria-label="Safari - Open live portfolio" title="Open live portfolio"><span className="dock-icon projects-icon"><Globe size={29}/></span><span className="dock-label">Safari</span></button>
+      <button className="dock-app" onClick={() => window.open(links.profilePhoto, "_blank", "noopener,noreferrer")} aria-label="Photos - Open profile photo" title="Open profile photo"><span className="dock-icon resume-icon"><ImageIcon size={29}/></span><span className="dock-label">Photos</span></button>
+      <button className="dock-app" onClick={() => open("contact")} aria-label="Contacts"><span className="dock-icon contact-icon"><Mail size={29}/></span><span className="dock-label">Contacts</span></button>
+      <button className="dock-app" onClick={() => window.open(links.github, "_blank", "noopener,noreferrer")} aria-label="Terminal - GitHub profile" title="Open GitHub profile"><span className="dock-icon menu-icon"><Code2 size={29}/></span><span className="dock-label">Terminal</span></button>
+      <button className="dock-app ask-dock-app" onClick={() => open("ask")} aria-label="Ask Me AI"><span className="dock-icon ask-icon"><Sparkles size={29}/></span><span className="dock-label">Ask Me</span></button>
     </nav>
     <div className="mobile-nav"><span className="mobile-brand"><Sparkles size={18}/> HireMeAI</span><button onClick={() => open("projects")}>Projects</button><button onClick={() => open("ask")}>Ask AI</button><button onClick={() => open("contact")}>Contact</button></div>
   </main>;
