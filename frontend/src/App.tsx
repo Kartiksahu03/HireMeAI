@@ -11,14 +11,18 @@ type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const links = {
   github: "https://github.com/Kartiksahu03",
-  // Add verified URLs to frontend/src/projectLinks.ts when you have them.
-  linkedin: "https://www.linkedin.com/",
-  email: ""
+  linkedin: "https://linkedin.com/in/kartik-sahu03",
+  email: "kartik.sahu3311@gmail.com",
+  profilePhoto: "https://avatars.githubusercontent.com/u/194357611?v=4"
 };
 const projects = [
-  { name: "FrHelp", type: "Community platform", description: "A project in Kartik's portfolio. Details will be expanded from verified project documentation.", stack: ["Web app"], icon: "🤝", color: "lavender", href: "" },
-  { name: "Paisa", type: "Personal finance", description: "A project in Kartik's portfolio. Add confirmed features and its deployed demo URL.", stack: ["Finance"], icon: "✳", color: "mint", href: "" },
-  { name: "AI Chatbot Portfolio", type: "Generative AI", description: "This macOS-inspired portfolio includes a grounded assistant powered by a retrieval step and Groq.", stack: ["React", "TypeScript", "RAG", "Groq"], icon: "✦", color: "peach", href: "https://github.com/Kartiksahu03/HireMeAI" }
+  { name: "FrHelp", type: "EdTech platform", description: "A MERN-based learning platform with course enrollment, role-based experiences, payments, and a Groq-powered support assistant.", stack: ["React", "Node.js", "MongoDB", "Groq"], icon: "🤝", color: "lavender", href: "https://frhelp-frontend.vercel.app/" },
+  { name: "Paisa", type: "Personal finance", description: "Expense tracker for logging spending, reviewing financial trends, and exploring AI-supported insights.", stack: ["React", "Redux", "Groq", "MERN"], icon: "₹", color: "mint", href: "https://paisa-expense-tracker.vercel.app/" },
+  { name: "AI Chatbot Portfolio", type: "Portfolio & AI assistant", description: "The deployed portfolio experience with a desktop-inspired interface and an assistant for portfolio questions.", stack: ["React", "TypeScript", "RAG", "Groq"], icon: "✦", color: "peach", href: "https://kartik-s-portfolio-tau.vercel.app/" },
+  { name: "GitHub Profile Finder", type: "API-powered utility", description: "Search GitHub users and inspect public profile details using the GitHub REST API.", stack: ["HTML", "CSS", "JavaScript", "REST API"], icon: "⌘", color: "lavender", href: "https://github-profile-finder25.netlify.app/" },
+  { name: "Shopping Cart", type: "Frontend application", description: "Responsive shopping cart demonstrating product state and cart interactions.", stack: ["React", "Redux Toolkit", "Tailwind"], icon: "🛍", color: "mint", href: "https://kartik-cart.netlify.app/" },
+  { name: "Random GIF Finder", type: "API-powered utility", description: "Generate random GIFs and search by tags using the Giphy API.", stack: ["React", "Giphy API", "Hooks"], icon: "🎞", color: "peach", href: "https://random-gif1.netlify.app/" },
+  { name: "React Router Demo", type: "Routing & auth", description: "A React authentication and navigation demo with protected routes and responsive forms.", stack: ["React", "React Router", "CSS"], icon: "↪", color: "lavender", href: "https://react-router25.netlify.app/" }
 ];
 const suggestions = ["Tell me about Kartik", "What projects are listed?", "What technologies does he use?"];
 
@@ -125,7 +129,7 @@ export default function App() {
           </div>
           <div className="profile-art" aria-label="Kartik Sahu developer profile illustration">
             <div className="profile-rings"/><div className="profile-rings profile-rings-two"/>
-            <div className="profile-monogram">KS</div>
+            <img className="profile-photo" src={links.profilePhoto} alt="Kartik Sahu profile" loading="eager" referrerPolicy="no-referrer" />
             <span className="art-tag tag-code"><Code2 size={16}/> CODE</span>
             <span className="art-tag tag-ai"><Sparkles size={16}/> AI</span>
             <span className="art-tag tag-web"><Globe size={16}/> WEB</span>
@@ -138,12 +142,12 @@ export default function App() {
 
     if (name === "projects") return <WindowFrame title="Projects" icon={<Folder size={17}/>} onClose={() => close(name)} className="content-window">
       <div className="section-heading"><div><span className="eyebrow">SELECTED WORK</span><h2>Projects & experiments<span className="accent">.</span></h2></div><span className="count-pill">{String(projects.length).padStart(2,"0")} PROJECTS</span></div>
-      <div className="project-list">{projects.map((project, i) => <article className="project-card" key={project.name}>
-        <div className={\`project-icon \${project.color}\`}>{project.icon}</div>
+      <div className="project-list">{projects.map((project, i) => <a className="project-card" key={project.name} href={project.href} target="_blank" rel="noreferrer" aria-label={`Open live app: ${project.name}`}>
+        <div className={`project-icon ${project.color}`}>{project.icon}</div>
         <div className="project-main"><div className="project-kicker">0{i + 1} / {project.type}</div><h3>{project.name}</h3><p>{project.description}</p><div className="chips">{project.stack.map((tech) => <span key={tech}>{tech}</span>)}</div></div>
-        <button className="round-link" aria-label={project.href ? \`Open \${project.name} project\` : \`View \${project.name} project details\`} onClick={() => openProject(project)}>{project.href ? <ExternalLink size={17}/> : <CircleHelp size={17}/>}</button>
-      </article>)}</div>
-      <p className="footnote">Live demo links are intentionally not guessed. Add your verified deployment URLs to the project list before publishing.</p>
+        <span className="round-link" aria-hidden="true"><ExternalLink size={17}/></span>
+      </a>)}</div>
+      <p className="footnote">Each project opens its verified live deployment in a new tab.</p>
     </WindowFrame>;
 
     if (name === "resume") return <WindowFrame title="Resume.pdf" icon={<FileText size={17}/>} onClose={() => close(name)} className="content-window resume-window">
