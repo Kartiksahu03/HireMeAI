@@ -176,27 +176,25 @@ export default function App() {
   return <main className="desktop">
     <div className="wallpaper-glow glow-a"/><div className="wallpaper-glow glow-b"/><div className="wallpaper-grid"/>
     <header className="menubar">
-      <div className="menu-left"><Apple size={20} fill="currentColor"/><strong>Kartik Sahu</strong><span className="menu-divider"/><button onClick={() => open("about")}>Portfolio</button><button onClick={() => open("projects")}>Projects</button><button onClick={() => open("contact")}>Contact</button><button onClick={openResume}>Resume ↗</button></div>
+      <div className="menu-left"><Apple size={20} fill="currentColor"/><strong>Kartik Sahu</strong><span className="menu-divider"/><button onClick={() => open("about")}>Portfolio</button><button onClick={() => open("projects")}>Window</button><button onClick={() => open("contact")}>Help</button></div>
       <div className="menu-right"><span className="menu-status" title="Wi-Fi"><Wifi size={19}/></span><button className="icon-menu" onClick={() => open("projects")} aria-label="Open project list"><Search size={18}/></button><span className="menu-status"><Battery size={19}/></span><span className="clock" title="Local time"><Clock3 size={15}/>{timeLabel}</span></div>
     </header>
 
     <aside className="desktop-shortcuts" aria-label="Desktop shortcuts">
-      <button onClick={openResume}><span className="desktop-file"><FileText size={29}/></span><span>Resume.pdf</span></button>
-      {projects.map((project) => <button key={project.name} onClick={() => openProject(project)}><span className={`desktop-file project-desktop-file ${project.color}`}>{project.icon}</span><span>{project.name}</span></button>)}
-      <button onClick={() => open("ask")}><span className="desktop-file ai-file"><Sparkles size={27}/></span><span>Ask Me.ai</span></button>
+      {projects.map((project) => <button key={project.name} onClick={() => openProject(project)} title={`Open ${project.name}`}><span className={`desktop-file project-desktop-file ${project.color}`}>{project.icon}</span><span>{project.name}</span></button>)}
     </aside>
     <div className={`window-stage ${maximized ? "maximized" : ""}`}>
       {openWindows.map((name) => <div key={name} className={`window-layer ${active === name ? "front" : "back"}`} onMouseDown={() => setActive(name)}>{renderWindow(name)}</div>)}
       {active && <div className="window-controls"><button title="Minimize active window" aria-label="Minimize active window" onClick={() => close(active)}><Minimize2 size={15}/></button><button title="Toggle window size" aria-label="Toggle window size" onClick={() => setMaximized((value) => !value)}><Maximize2 size={15}/></button></div>}
     </div>
     <div className="desktop-hint"><span className="status-dot"/> Select an app to explore</div>
-    <nav className="dock" aria-label="Portfolio app dock">
-      <button className="dock-app" onClick={() => open("projects")} aria-label="Finder - Projects" title="Finder · Projects"><span className="dock-icon home-icon"><PanelsTopLeft size={29}/></span><span className="dock-label">Finder</span></button>
-      <button className="dock-app" onClick={() => window.open("https://kartik-s-portfolio-tau.vercel.app/", "_blank", "noopener,noreferrer")} aria-label="Safari - Open live portfolio" title="Open live portfolio"><span className="dock-icon projects-icon"><Globe size={29}/></span><span className="dock-label">Safari</span></button>
-      <button className="dock-app" onClick={() => window.open(links.profilePhoto, "_blank", "noopener,noreferrer")} aria-label="Photos - Open profile photo" title="Open profile photo"><span className="dock-icon resume-icon"><ImageIcon size={29}/></span><span className="dock-label">Photos</span></button>
-      <button className="dock-app" onClick={() => open("contact")} aria-label="Contacts"><span className="dock-icon contact-icon"><Mail size={29}/></span><span className="dock-label">Contacts</span></button>
-      <button className="dock-app" onClick={() => window.open(links.github, "_blank", "noopener,noreferrer")} aria-label="Terminal - GitHub profile" title="Open GitHub profile"><span className="dock-icon menu-icon"><Code2 size={29}/></span><span className="dock-label">Terminal</span></button>
-      <button className="dock-app ask-dock-app" onClick={() => open("ask")} aria-label="Ask Me AI"><span className="dock-icon ask-icon"><Sparkles size={29}/></span><span className="dock-label">Ask Me</span></button>
+    <nav className="dock" aria-label="macOS dock">
+      <button className="dock-app" onClick={() => open("about")} aria-label="Home" title="Home"><span className="dock-icon home-icon"><PanelsTopLeft size={29}/></span><span className="dock-label">Home</span></button>
+      <button className="dock-app" onClick={() => open("projects")} aria-label="Projects" title="Projects"><span className="dock-icon projects-icon"><Folder size={29}/></span><span className="dock-label">Projects</span></button>
+      <button className="dock-app" onClick={openResume} aria-label="Resume" title="Resume opens in a new tab"><span className="dock-icon resume-icon"><FileText size={29}/></span><span className="dock-label">Resume</span></button>
+      <button className="dock-app ask-dock-app" onClick={() => open("ask")} aria-label="Ask Me AI" title="Ask Me AI"><span className="dock-icon ask-icon"><Sparkles size={29}/></span><span className="dock-label">Ask Me</span></button>
+      <button className="dock-app" onClick={() => open("contact")} aria-label="Contact" title="Contact"><span className="dock-icon contact-icon"><Mail size={29}/></span><span className="dock-label">Contact</span></button>
+      <button className="dock-app" onClick={() => window.open(links.github, "_blank", "noopener,noreferrer")} aria-label="GitHub profile" title="GitHub profile"><span className="dock-icon menu-icon"><Github size={29}/></span><span className="dock-label">GitHub</span></button>
     </nav>
     <div className="mobile-nav"><span className="mobile-brand"><Sparkles size={18}/> HireMeAI</span><button onClick={() => open("projects")}>Projects</button><button onClick={() => open("ask")}>Ask AI</button><button onClick={() => open("contact")}>Contact</button></div>
   </main>;
