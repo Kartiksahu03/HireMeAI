@@ -27,7 +27,7 @@ const projects = [
 const suggestions = ["Tell me about Kartik", "What projects are listed?", "What technologies does he use?"];
 
 function WindowFrame({ title, icon, onClose, children, className = "" }: { title: string; icon?: React.ReactNode; onClose: () => void; children: React.ReactNode; className?: string }) {
-  return <section className={\`window \${className}\`}>
+  return <section className={`window ${className}`}>
     <header className="window-bar">
       <div className="traffic">
         <button className="dot red" aria-label="Close window" onClick={onClose}><X size={11}/></button>
@@ -78,13 +78,13 @@ export default function App() {
         body: JSON.stringify({ message: trimmed })
       });
       const data = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(data.error || \`Assistant request failed (\${response.status}).\`);
+      if (!response.ok) throw new Error(data.error || `Assistant request failed (${response.status}).`);
       if (typeof data.answer !== "string" || !data.answer.trim()) throw new Error("The assistant returned an empty answer. Please try again.");
       setMessages((prev) => [...prev, { role: "assistant", content: data.answer }]);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Could not reach the portfolio assistant.";
       setChatError(message);
-      setMessages((prev) => [...prev, { role: "assistant", content: \`Sorry — I couldn't answer that right now. \${message} Check that the backend is running and GROQ_API_KEY is set in your root .env file.\` }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: `Sorry — I couldn't answer that right now. ${message} Check that the backend is running and GROQ_API_KEY is set in your root .env file.` }]);
     } finally {
       setLoading(false);
     }
@@ -101,7 +101,7 @@ export default function App() {
     if (project.href) window.open(project.href, "_blank", "noopener,noreferrer");
     else {
       open("projects");
-      setChatError(\`A verified live demo URL for \${project.name} has not been added yet. Add it in frontend/src/App.tsx before publishing.\`);
+      setChatError(`A verified live demo URL for ${project.name} has not been added yet. Add it in frontend/src/App.tsx before publishing.`);
     }
   };
 
@@ -122,7 +122,7 @@ export default function App() {
             <div className="social-links">
               <a href={links.github} target="_blank" rel="noreferrer"><Github size={17}/> GitHub <ExternalLink size={13}/></a>
               <a href={links.linkedin} target="_blank" rel="noreferrer"><Linkedin size={17}/> LinkedIn <ExternalLink size={13}/></a>
-              {links.email && <a href={\`mailto:\${links.email}\`}><Mail size={17}/> Email</a>}
+              {links.email && <a href={`mailto:${links.email}`}><Mail size={17}/> Email</a>}
             </div>
           </div>
           <div className="profile-art" aria-label="Kartik Sahu developer profile illustration">
@@ -155,7 +155,7 @@ export default function App() {
 
     if (name === "ask") return <WindowFrame title="Ask Me — AI Assistant" icon={<Sparkles size={17}/>} onClose={() => close(name)} className="content-window chat-window">
       <div className="chat-intro"><div className="bot-avatar"><Bot size={23}/></div><div><strong>Portfolio Intelligence</strong><p><span className="status-dot"/> Grounded answers · Groq + retrieval</p></div><span className="count-pill">AI</span></div>
-      <div className="chat-messages">{messages.map((message, i) => <div className={\`chat-message \${message.role}\`} key={i}><div className="message-avatar">{message.role === "assistant" ? <Sparkles size={16}/> : <UserRound size={16}/>}</div><div className="message-bubble">{message.content}</div></div>)}{loading && <div className="chat-message assistant"><div className="message-avatar"><Sparkles size={16}/></div><div className="message-bubble typing"><span/><span/><span/></div></div>}</div>
+      <div className="chat-messages">{messages.map((message, i) => <div className={`chat-message ${message.role}`} key={i}><div className="message-avatar">{message.role === "assistant" ? <Sparkles size={16}/> : <UserRound size={16}/>}</div><div className="message-bubble">{message.content}</div></div>)}{loading && <div className="chat-message assistant"><div className="message-avatar"><Sparkles size={16}/></div><div className="message-bubble typing"><span/><span/><span/></div></div>}</div>
       {messages.length < 3 && <div className="suggestions">{suggestions.map((suggestion) => <button key={suggestion} disabled={loading} onClick={() => void ask(suggestion)}>{suggestion}<ChevronRight size={15}/></button>)}</div>}
       {chatError && <p className="chat-error" role="status">{chatError}</p>}
       <form className="chat-form" onSubmit={(event) => { event.preventDefault(); void ask(); }}><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask about skills, projects, experience…" aria-label="Ask the portfolio assistant"/><button type="submit" disabled={loading || !input.trim()} aria-label="Send message"><Send size={18}/></button></form>
@@ -166,7 +166,7 @@ export default function App() {
       <div className="contact-content"><div className="contact-orb"><Mail size={30}/></div><span className="eyebrow">LET'S CONNECT</span><h2>Let's make something<br/>meaningful<span className="accent">.</span></h2><p className="muted">Have a project, opportunity, or interesting problem? Find me through these profiles.</p><div className="contact-links">
         <a href={links.github} target="_blank" rel="noreferrer"><Github size={18}/> GitHub <ArrowUpRight size={15}/></a>
         <a href={links.linkedin} target="_blank" rel="noreferrer"><Linkedin size={18}/> LinkedIn <ArrowUpRight size={15}/></a>
-        {links.email ? <a href={\`mailto:\${links.email}\`}><Mail size={18}/> Email <ArrowUpRight size={15}/></a> : <span className="missing-link">Add your email to enable email contact</span>}
+        {links.email ? <a href={`mailto:${links.email}`}><Mail size={18}/> Email <ArrowUpRight size={15}/></a> : <span className="missing-link">Add your email to enable email contact</span>}
       </div></div>
     </WindowFrame>;
   };
@@ -182,11 +182,11 @@ export default function App() {
 
     <aside className="desktop-shortcuts" aria-label="Desktop shortcuts">
       <button onClick={openResume}><span className="desktop-file"><FileText size={29}/></span><span>Resume.pdf</span></button>
-      {projects.map((project) => <button key={project.name} onClick={() => openProject(project)}><span className={\`desktop-file project-desktop-file \${project.color}\`}>{project.icon}</span><span>{project.name}</span></button>)}
+      {projects.map((project) => <button key={project.name} onClick={() => openProject(project)}><span className={`desktop-file project-desktop-file ${project.color}`}>{project.icon}</span><span>{project.name}</span></button>)}
       <button onClick={() => open("ask")}><span className="desktop-file ai-file"><Sparkles size={27}/></span><span>Ask Me.ai</span></button>
     </aside>
-    <div className={\`window-stage \${maximized ? "maximized" : ""}\`}>
-      {openWindows.map((name) => <div key={name} className={\`window-layer \${active === name ? "front" : "back"}\`} onMouseDown={() => setActive(name)}>{renderWindow(name)}</div>)}
+    <div className={`window-stage ${maximized ? "maximized" : ""}`}>
+      {openWindows.map((name) => <div key={name} className={`window-layer ${active === name ? "front" : "back"}`} onMouseDown={() => setActive(name)}>{renderWindow(name)}</div>)}
       {active && <div className="window-controls"><button title="Minimize active window" aria-label="Minimize active window" onClick={() => close(active)}><Minimize2 size={15}/></button><button title="Toggle window size" aria-label="Toggle window size" onClick={() => setMaximized((value) => !value)}><Maximize2 size={15}/></button></div>}
     </div>
     <div className="desktop-hint"><span className="status-dot"/> Select an app to explore</div>
