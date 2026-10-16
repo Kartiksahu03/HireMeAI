@@ -30,4 +30,4 @@ The API health endpoint is \`http://localhost:3001/api/health\`.
 ## RAG note
 The current retrieval step uses keyword overlap against a small curated knowledge base. It is retrieval-before-generation, but not embedding-based semantic search or a vector database.
 
-The UI follows a macOS portfolio-desktop pattern. It was redesigned from the supplied screenshot/reference concept; reference-owner personal assets and resume are not copied into this repository.
+The UI follows a macOS portfolio-desktop pattern based on your reference screenshots. The wallpaper is loaded from the reference repository; the reference owner's profile photo and resume are not used.
