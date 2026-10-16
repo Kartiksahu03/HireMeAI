@@ -1,25 +1,36 @@
 # HireMeAI ✦
 
-A macOS-inspired, interactive portfolio for Kartik Sahu, with an AI resume assistant powered by Groq and retrieval-augmented generation (RAG).
+A macOS-inspired portfolio for Kartik Sahu with a React + TypeScript frontend and a separate JavaScript/Express API. The portfolio AI uses lexical retrieval (a lightweight RAG approach) before calling Groq.
 
-## Stack
-- React + TypeScript + Vite
-- Node.js + Express API (JavaScript)
-- Groq API for grounded chat completions
-- Lightweight lexical retrieval over a curated profile knowledge base
-- Responsive glassmorphism UI
+## Folder guide
+- `frontend/` — all website UI code, React components, styles, and Vite config.
+- `frontend/src/App.tsx` — portfolio windows, desktop shortcuts, projects, and chat UI.
+- `frontend/src/styles.css` — glassmorphism design and responsive layout.
+- `backend/src/server.js` — starts the API server.
+- `backend/src/app.js` — Express app and API routes.
+- `backend/src/routes/chatRoutes.js` — validates chat requests and coordinates retrieval + response.
+- `backend/src/services/retrievalService.js` — retrieves relevant portfolio knowledge.
+- `backend/src/services/groqService.js` — calls the Groq API with grounded context.
+- `backend/src/data/knowledgeBase.js` — portfolio facts used by the AI. Replace starter copy with verified resume details.
+- `.env.example` — template for local secrets. Never commit your real `.env`.
 
-## Run locally
-1. Install Node.js 20+.
-2. Run `npm install`.
-3. Copy `.env.example` to `.env` and add your Groq API key.
-4. Run `npm run dev`.
-5. Open the local URL Vite prints (normally http://localhost:5173).
+## Run it in VS Code
+1. Install Node.js 20 or newer.
+2. Open this repository folder in VS Code.
+3. In the VS Code terminal, run `npm install`.
+4. Copy `.env.example` to a new file named `.env` in the repository root.
+5. Open `.env` and add your Groq key: `GROQ_API_KEY=your_real_key_here`. Keep the key private.
+6. Run `npm run dev`.
+7. Open the frontend URL shown in the terminal (usually `http://localhost:5173`).
 
-The frontend runs on Vite; the API runs on port 3001. In production, build with `npm run build` and run `npm start`. Serve the generated `dist` folder from a static host and deploy the API separately, or configure your host to serve the frontend and proxy `/api` to the backend.
+The frontend and backend run separately under one command. The API health endpoint is `http://localhost:3001/api/health`.
 
-## RAG and grounding
-The API ranks curated profile snippets by lexical overlap before sending only relevant context to Groq. It instructs the model to answer only from retrieved context and to say when a detail is not available. This is a compact retrieval pipeline, not a vector database. Edit the profile knowledge base in `backend.js` as you verify resume details.
+## Before publishing
+- Replace demo project descriptions with accurate details and add real GitHub/live-demo URLs.
+- Update the contact links in `frontend/src/App.tsx`.
+- Update `backend/src/data/knowledgeBase.js` with verified facts from your resume.
+- Do not commit your private resume PDF or any API key.
+- The AI chat needs a valid Groq key. The portfolio UI can be viewed without one, but chat will show a setup message.
 
-## Security
-Never commit your real `.env`, API key, or private resume PDF. Add only verified experience, links, and project details before publishing.
+## RAG note
+Retrieval currently uses lexical keyword overlap against a small curated knowledge base. It is retrieval-before-generation, but it is not a vector database or embedding-based semantic search.
