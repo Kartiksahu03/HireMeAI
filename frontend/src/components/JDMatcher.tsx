@@ -4,7 +4,10 @@ import * as pdfjs from "pdfjs-dist";
 
 const portfolioSkills = [
   "JavaScript", "TypeScript", "React", "Node.js", "Express", "MongoDB",
-  "Redux Toolkit", "REST APIs", "Groq", "Generative AI", "RAG", "HTML", "CSS", "Tailwind CSS"
+  "Redux Toolkit", "REST APIs", "Groq", "Generative AI", "RAG", "HTML", "CSS", "Tailwind CSS",
+  "Python", "Java", "C++", "C#", "Go", "Rust", "AWS", "Azure", "Docker", "Kubernetes",
+  "PostgreSQL", "MySQL", "GraphQL", "Next.js", "Vue", "Angular", "Jest", "Cypress",
+  "CI/CD", "Leadership", "Communication", "Agile", "Scrum"
 ];
 
 const evidence = [
