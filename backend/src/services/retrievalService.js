@@ -19,7 +19,7 @@ const SYNONYMS = {
   experience: ["profile", "frhelp", "developer"],
   contact: ["email", "linkedin", "github", "kartik"],
   yourself: ["profile", "kartik", "developer"],
-  hire: ["profile", "projects", "skills", "developer"]
+  hire: ["profile", "projects", "skills", "developer"],\n  better: ["strength", "strengths", "skills", "projects", "technology", "react", "node", "ai"],\n  good: ["strength", "skills", "projects", "technology"],\n  strength: ["skills", "projects", "technology", "stack"],\n  strengths: ["skills", "projects", "technology", "stack"],\n  qualities: ["skills", "profile", "projects"],\n  quality: ["skills", "profile", "projects"]
 };
 
 const tokenize = (text) => (text.toLowerCase().match(/[a-z0-9+#.-]+/g) || [])
