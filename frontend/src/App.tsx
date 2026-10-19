@@ -148,7 +148,7 @@ export default function App() {
       <p className="footnote">Each project opens its verified live deployment in a new tab.</p>
     </WindowFrame>;
 
-    if (name === "resume") return <WindowFrame title="Resume.pdf" icon={<FileText size={17}/>} onClose={() => close(name)} className="content-window resume-window">
+    if (name === "jd") return <WindowFrame title="Job Description Match" icon={<FileUp size={17}/>} onClose={() => close(name)} className="content-window jd-window"><div className="section-heading"><div><span className="eyebrow">RESUME-TO-ROLE ANALYSIS</span><h2>Check the fit<span className="accent">.</span></h2></div><span className="count-pill">JD MATCH</span></div><JDMatcher /></WindowFrame>;\n\n    if (name === "resume") return <WindowFrame title="Resume.pdf" icon={<FileText size={17}/>} onClose={() => close(name)} className="content-window resume-window">
       <div className="resume-toolbar"><span><FileText size={16}/> Kartik-Sahu-Resume.pdf</span><div className="resume-actions"><button className="small-action" onClick={openResume}><ExternalLink size={15}/> Open in new tab</button><button className="small-action accent-action" onClick={downloadResume}><Download size={15}/> Download PDF</button></div></div>
       <div className="resume-empty"><FileText size={38}/><h2>Your resume PDF goes here</h2><p>Place your verified resume in <code>frontend/public/files/resume.pdf</code>. The Resume shortcut will then open this PDF in a new browser tab and enable downloads.</p></div>
     </WindowFrame>;
