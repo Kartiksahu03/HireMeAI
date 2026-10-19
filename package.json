@@ -16,7 +16,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "groq-sdk": "^0.15.0",
-    "lucide-react": "^0.468.0",\n    "pdfjs-dist": "^4.10.38",
+    "lucide-react": "^0.468.0",
+    "pdfjs-dist": "^4.10.38",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zod": "^3.24.1"
