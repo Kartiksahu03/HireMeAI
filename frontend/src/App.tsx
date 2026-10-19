@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-  Apple, Battery, Wifi, Search, Github, Linkedin, Mail, ExternalLink,
+  Apple, Battery, Wifi, Search, Github, Linkedin, Mail, ExternalLink, FileUp, PlayCircle,
   Folder, FileText, Sparkles, X, ArrowUpRight, Code2, Send, Bot, UserRound,
   ChevronRight, Clock3, Download, PanelsTopLeft, Globe, Image as ImageIcon,
   CircleHelp, Maximize2, Minimize2
 } from "lucide-react";
 
-type WindowName = "about" | "projects" | "resume" | "ask" | "contact";
+type WindowName = "about" | "projects" | "resume" | "ask" | "contact" | "jd";
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 const links = {
@@ -16,8 +16,8 @@ const links = {
   profilePhoto: "https://avatars.githubusercontent.com/u/194357611?v=4"
 };
 const projects = [
-  { name: "FrHelp", type: "EdTech platform", description: "A MERN-based learning platform with course enrollment, role-based experiences, payments, and a Groq-powered support assistant.", stack: ["React", "Node.js", "MongoDB", "Groq"], icon: "🤝", color: "lavender", href: "https://frhelp-frontend.vercel.app/" },
-  { name: "Paisa", type: "Personal finance", description: "Expense tracker for logging spending, reviewing financial trends, and exploring AI-supported insights.", stack: ["React", "Redux", "Groq", "MERN"], icon: "₹", color: "mint", href: "https://paisa-expense-tracker.vercel.app/" },
+  { name: "FrHelp", type: "EdTech platform", description: "A MERN-based learning platform with course enrollment, role-based experiences, payments, and a Groq-powered support assistant.", stack: ["React", "Node.js", "MongoDB", "Groq"], icon: "🤝", color: "lavender", href: "https://frhelp-frontend.vercel.app/", video: "/videos/frhelp-demo.mp4" },
+  { name: "Paisa", type: "Personal finance", description: "Expense tracker for logging spending, reviewing financial trends, and exploring AI-supported insights.", stack: ["React", "Redux", "Groq", "MERN"], icon: "₹", color: "mint", href: "https://paisa-expense-tracker.vercel.app/", video: "/videos/paisa-demo.mp4" },
   { name: "AI Chatbot Portfolio", type: "Portfolio & AI assistant", description: "The deployed portfolio experience with a desktop-inspired interface and an assistant for portfolio questions.", stack: ["React", "TypeScript", "RAG", "Groq"], icon: "✦", color: "peach", href: "https://kartik-s-portfolio-tau.vercel.app/" },
   { name: "GitHub Profile Finder", type: "API-powered utility", description: "Search GitHub users and inspect public profile details using the GitHub REST API.", stack: ["HTML", "CSS", "JavaScript", "REST API"], icon: "⌘", color: "lavender", href: "https://github-profile-finder25.netlify.app/" },
   { name: "Shopping Cart", type: "Frontend application", description: "Responsive shopping cart demonstrating product state and cart interactions.", stack: ["React", "Redux Toolkit", "Tailwind"], icon: "🛍", color: "mint", href: "https://kartik-cart.netlify.app/" },
@@ -48,7 +48,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [chatError, setChatError] = useState("");
   const [now, setNow] = useState(new Date());
-  const [maximized, setMaximized] = useState(false);
+  const [maximized, setMaximized] = useState(false);\n  const [chatEnd, setChatEnd] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 1000);
@@ -90,7 +90,7 @@ export default function App() {
     }
   };
 
-  const openResume = () => window.open("/files/resume.pdf", "_blank", "noopener,noreferrer");
+  const openVideo = (project: typeof projects[number]) => { if ("video" in project && project.video) window.open(project.video, "_blank", "noopener,noreferrer"); };\n  const openResume = () => window.open("/files/resume.pdf", "_blank", "noopener,noreferrer");
   const downloadResume = () => {
     const anchor = document.createElement("a");
     anchor.href = "/files/resume.pdf";
@@ -140,7 +140,7 @@ export default function App() {
 
     if (name === "projects") return <WindowFrame title="Projects" icon={<Folder size={17}/>} onClose={() => close(name)} className="content-window">
       <div className="section-heading"><div><span className="eyebrow">SELECTED WORK</span><h2>Projects & experiments<span className="accent">.</span></h2></div><span className="count-pill">{String(projects.length).padStart(2,"0")} PROJECTS</span></div>
-      <div className="project-list">{projects.map((project, i) => <a className="project-card" key={project.name} href={project.href} target="_blank" rel="noreferrer" aria-label={`Open live app: ${project.name}`}>
+      <div className="project-list">{projects.map((project, i) => <article className="project-card" key={project.name}>
         <div className={`project-icon ${project.color}`}>{project.icon}</div>
         <div className="project-main"><div className="project-kicker">0{i + 1} / {project.type}</div><h3>{project.name}</h3><p>{project.description}</p><div className="chips">{project.stack.map((tech) => <span key={tech}>{tech}</span>)}</div></div>
         <span className="round-link" aria-hidden="true"><ExternalLink size={17}/></span>
@@ -154,8 +154,8 @@ export default function App() {
     </WindowFrame>;
 
     if (name === "ask") return <WindowFrame title="Ask Me — AI Assistant" icon={<Sparkles size={17}/>} onClose={() => close(name)} className="content-window chat-window">
-      <div className="chat-intro"><div className="bot-avatar"><Bot size={23}/></div><div><strong>Portfolio Intelligence</strong><p><span className="status-dot"/> Grounded answers · Groq + retrieval</p></div><span className="count-pill">AI</span></div>
-      <div className="chat-messages">{messages.map((message, i) => <div className={`chat-message ${message.role}`} key={i}><div className="message-avatar">{message.role === "assistant" ? <Sparkles size={16}/> : <UserRound size={16}/>}</div><div className="message-bubble">{message.content}</div></div>)}{loading && <div className="chat-message assistant"><div className="message-avatar"><Sparkles size={16}/></div><div className="message-bubble typing"><span/><span/><span/></div></div>}</div>
+      <div className="chat-intro"><div className="bot-avatar"><Bot size={23}/></div><div><strong>Portfolio Intelligence</strong><p><span className="status-dot"/> Grounded answers · Groq + retrieval</p></div><button className="jd-shortcut" onClick={() => open("jd")}><FileUp size={15}/> Match a JD</button><span className="count-pill">AI</span></div>
+      <div className="chat-messages">{messages.map((message, i) => <div className={`chat-message ${message.role}`} key={i}><div className="message-avatar">{message.role === "assistant" ? <Sparkles size={16}/> : <UserRound size={16}/>}</div><div className="message-bubble">{message.content}</div></div>)}{loading && <div className="chat-message assistant"><div className="message-avatar"><Sparkles size={16}/></div><div className="message-bubble typing"><span/><span/><span/></div></div>}<div ref={setChatEnd}/></div>
       {messages.length < 3 && <div className="suggestions">{suggestions.map((suggestion) => <button key={suggestion} disabled={loading} onClick={() => void ask(suggestion)}>{suggestion}<ChevronRight size={15}/></button>)}</div>}
       {chatError && <p className="chat-error" role="status">{chatError}</p>}
       <form className="chat-form" onSubmit={(event) => { event.preventDefault(); void ask(); }}><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask about skills, projects, experience…" aria-label="Ask the portfolio assistant"/><button type="submit" disabled={loading || !input.trim()} aria-label="Send message"><Send size={18}/></button></form>
@@ -181,7 +181,7 @@ export default function App() {
     </header>
 
     <aside className="desktop-shortcuts" aria-label="Desktop shortcuts">
-      {projects.map((project) => <button key={project.name} onClick={() => openProject(project)} title={`Open ${project.name}`}><span className={`desktop-file project-desktop-file ${project.color}`}>{project.icon}</span><span>{project.name}</span></button>)}
+      {projects.filter((project) => project.name === "FrHelp" || project.name === "Paisa").map((project) => <div className="desktop-project-shortcut" key={project.name}><button className="desktop-project-launch" onClick={() => openProject(project)} title={`Open live ${project.name} project`}><span className={`desktop-file project-desktop-file ${project.color}`}>{project.icon}</span><strong>{project.name}</strong><span className="desktop-project-subtitle">Open live app ↗</span></button>{"video" in project && project.video && <button className="desktop-video-button" onClick={() => openVideo(project)}><PlayCircle size={14}/> Watch walkthrough</button>}</div>)}
     </aside>
     <div className={`window-stage ${maximized ? "maximized" : ""}`}>
       {openWindows.map((name) => <div key={name} className={`window-layer ${active === name ? "front" : "back"}`} onMouseDown={() => setActive(name)}>{renderWindow(name)}</div>)}
@@ -192,7 +192,7 @@ export default function App() {
       <button className="dock-app" onClick={() => open("about")} aria-label="Home" title="Home"><span className="dock-icon home-icon"><PanelsTopLeft size={29}/></span><span className="dock-label">Home</span></button>
       <button className="dock-app" onClick={() => open("projects")} aria-label="Projects" title="Projects"><span className="dock-icon projects-icon"><Folder size={29}/></span><span className="dock-label">Projects</span></button>
       <button className="dock-app" onClick={openResume} aria-label="Resume" title="Resume opens in a new tab"><span className="dock-icon resume-icon"><FileText size={29}/></span><span className="dock-label">Resume</span></button>
-      <button className="dock-app ask-dock-app" onClick={() => open("ask")} aria-label="Ask Me AI" title="Ask Me AI"><span className="dock-icon ask-icon"><Sparkles size={29}/></span><span className="dock-label">Ask Me</span></button>
+      <button className="dock-app ask-dock-app" onClick={() => open("ask")} aria-label="Ask Me AI" title="Ask Me AI"><span className="dock-icon ask-icon"><Sparkles size={29}/></span><span className="dock-label">Ask Me</span></button><button className="dock-app jd-dock-app" onClick={() => open("jd")} aria-label="Job Description Match" title="Upload and match a job description"><span className="dock-icon jd-icon"><FileUp size={27}/></span><span className="dock-label">JD Match</span></button>
       <button className="dock-app" onClick={() => open("contact")} aria-label="Contact" title="Contact"><span className="dock-icon contact-icon"><Mail size={29}/></span><span className="dock-label">Contact</span></button>
       <button className="dock-app" onClick={() => window.open(links.github, "_blank", "noopener,noreferrer")} aria-label="GitHub profile" title="GitHub profile"><span className="dock-icon menu-icon"><Github size={29}/></span><span className="dock-label">GitHub</span></button>
     </nav>
