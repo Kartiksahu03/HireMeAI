@@ -53,6 +53,10 @@ export default function App() {
   const [chatEnd, setChatEnd] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    chatEnd?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages, loading, active, chatEnd]);
+
+  useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(timer);
   }, []);
