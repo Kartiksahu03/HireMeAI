@@ -4,7 +4,7 @@ import {
   Folder, FileText, Sparkles, X, ArrowUpRight, Code2, Send, Bot, UserRound,
   ChevronRight, Clock3, Download, PanelsTopLeft, Globe, Image as ImageIcon,
   CircleHelp, Maximize2, Minimize2
-} from "lucide-react";
+} from "lucide-react";\nimport JDMatcher from "./components/JDMatcher";
 
 type WindowName = "about" | "projects" | "resume" | "ask" | "contact" | "jd";
 type ChatMessage = { role: "user" | "assistant"; content: string };
