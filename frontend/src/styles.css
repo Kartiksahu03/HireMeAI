@@ -94,3 +94,33 @@
 .jd-json{max-height:300px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;background:#151329;color:#d8d1f2;border:1px solid #403a5d;border-radius:10px;padding:14px;font:11px/1.6 var(--mono)}
 @media(max-width:1100px){.desktop-shortcuts{width:165px;right:10px}.desktop-file.project-desktop-file{width:60px;height:60px}.content-window:has(.project-list){max-width:calc(100vw - 210px)}.project-list{grid-auto-columns:minmax(235px,270px)}}
 @media(max-width:760px){.desktop-shortcuts{display:none}.content-window:has(.project-list){max-width:100%}.project-list{grid-auto-columns:minmax(245px,78vw);padding:0 15px 16px}.project-card{padding:14px}.jd-content{padding:0 16px 22px}.jd-columns{grid-template-columns:1fr}.jd-shortcut{font-size:10px;padding:7px}.chat-intro{gap:9px}.jd-score strong{font-size:32px}}
+
+
+/* Keep long job-description forms inside their own window rather than behind the dock. */
+.jd-window{display:flex;flex-direction:column;max-height:calc(100svh - 165px);min-height:0;overflow:hidden}
+.jd-window>.window-bar{flex:0 0 46px}
+.jd-window>.section-heading{flex:0 0 auto;padding:22px 30px 14px}
+.jd-window>.jd-content{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 30px 28px;scrollbar-gutter:stable}
+.jd-window .jd-upload{margin:12px 0 18px;padding:17px}
+.jd-window .jd-label textarea{min-height:150px;max-height:36vh}
+.jd-window .jd-results{padding-bottom:12px}
+.jd-window .jd-json{max-height:220px}
+.video-modal-backdrop{position:fixed;z-index:100;inset:0;display:grid;place-items:center;padding:24px;background:rgba(8,7,20,.82)}
+.video-modal{width:min(900px,100%);max-height:calc(100svh - 48px);overflow:auto;background:#201e39;border:1px solid #5c527f;border-radius:16px;box-shadow:0 24px 80px #0009;padding:20px}
+.video-modal>header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:16px}
+.video-modal h2{font-size:22px;margin:5px 0 0}
+.video-modal-close{display:grid;place-items:center;width:38px;height:38px;border:1px solid #554b77;background:#302b4d;color:#fff;border-radius:10px}
+.video-modal video{display:block;width:100%;max-height:calc(100svh - 210px);aspect-ratio:16/9;background:#0b0a15;border-radius:10px}
+.video-missing{margin-top:14px;padding:15px;border-radius:10px;background:#302b4d;color:#e8e1ff}
+.video-missing p{font-size:13px;line-height:1.6;margin:8px 0 0;color:#c8c0e4}
+.video-missing code{overflow-wrap:anywhere;color:#f2eaff}
+@media(max-width:760px){
+ .jd-window{max-height:calc(100svh - 180px)}
+ .jd-window>.section-heading{padding:16px 16px 12px}
+ .jd-window>.jd-content{padding:0 16px 20px}
+ .jd-window .jd-upload{padding:14px}
+ .jd-window .jd-label textarea{min-height:130px;max-height:32vh}
+ .video-modal-backdrop{padding:10px}
+ .video-modal{padding:14px;max-height:calc(100svh - 20px)}
+ .video-modal h2{font-size:19px}
+}
