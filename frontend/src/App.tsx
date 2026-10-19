@@ -143,8 +143,8 @@ export default function App() {
       <div className="project-list">{projects.map((project, i) => <article className="project-card" key={project.name}>
         <div className={`project-icon ${project.color}`}>{project.icon}</div>
         <div className="project-main"><div className="project-kicker">0{i + 1} / {project.type}</div><h3>{project.name}</h3><p>{project.description}</p><div className="chips">{project.stack.map((tech) => <span key={tech}>{tech}</span>)}</div></div>
-        <span className="round-link" aria-hidden="true"><ExternalLink size={17}/></span>
-      </a>)}</div>
+        <div className="project-card-actions"><a className="round-link" href={project.href} target="_blank" rel="noreferrer" aria-label={`Open live app: ${project.name}`} title="Open live project"><ExternalLink size={17}/></a>{"video" in project && project.video && <button className="video-action" onClick={() => openVideo(project)} title={`Watch ${project.name} project walkthrough`}><PlayCircle size={15}/> View walkthrough</button>}</div>
+      </article>)}</div>
       <p className="footnote">Each project opens its verified live deployment in a new tab.</p>
     </WindowFrame>;
 
