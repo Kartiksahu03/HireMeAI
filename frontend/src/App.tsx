@@ -51,6 +51,8 @@ export default function App() {
   const [now, setNow] = useState(new Date());
   const [maximized, setMaximized] = useState(false);
   const [chatEnd, setChatEnd] = useState<HTMLDivElement | null>(null);
+  const [activeVideo, setActiveVideo] = useState<{name:string; video:string} | null>(null);
+  const [videoUnavailable, setVideoUnavailable] = useState(false);
 
   useEffect(() => {
     chatEnd?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -96,7 +98,7 @@ export default function App() {
     }
   };
 
-  const openVideo = (project: typeof projects[number]) => { if ("video" in project && project.video) window.open(project.video, "_blank", "noopener,noreferrer"); };
+  const openVideo = (project: typeof projects[number]) => { if ("video" in project && project.video) { setVideoUnavailable(false); setActiveVideo({ name: project.name, video: project.video }); } };
   const openResume = () => window.open("/files/resume.pdf", "_blank", "noopener,noreferrer");
   const downloadResume = () => {
     const anchor = document.createElement("a");
@@ -196,6 +198,7 @@ export default function App() {
       {openWindows.map((name) => <div key={name} className={`window-layer ${active === name ? "front" : "back"}`} onMouseDown={() => setActive(name)}>{renderWindow(name)}</div>)}
       {active && <div className="window-controls"><button title="Minimize active window" aria-label="Minimize active window" onClick={() => close(active)}><Minimize2 size={15}/></button><button title="Toggle window size" aria-label="Toggle window size" onClick={() => setMaximized((value) => !value)}><Maximize2 size={15}/></button></div>}
     </div>
+    {activeVideo && <div className="video-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveVideo(null); }}><section className="video-modal" role="dialog" aria-modal="true" aria-label={`${activeVideo.name} walkthrough`}><header><div><span className="eyebrow">PROJECT WALKTHROUGH</span><h2>{activeVideo.name}</h2></div><button className="video-modal-close" onClick={() => setActiveVideo(null)} aria-label="Close walkthrough"><X size={20}/></button></header><video controls playsInline preload="metadata" src={activeVideo.video} onError={() => setVideoUnavailable(true)}>{`Your browser does not support video playback.`}</video>{videoUnavailable && <div className="video-missing"><strong>Walkthrough video not found yet</strong><p>Add the MP4 to <code>frontend/public{activeVideo.video}</code>, then restart or refresh the app.</p><p>Expected filename: <code>{activeVideo.video.split("/").pop()}</code></p></div>}</section></div>}
     <div className="desktop-hint"><span className="status-dot"/> Select an app to explore</div>
     <nav className="dock" aria-label="macOS dock">
       <button className="dock-app" onClick={() => open("about")} aria-label="Home" title="Home"><span className="dock-icon home-icon"><PanelsTopLeft size={29}/></span><span className="dock-label">Home</span></button>
