@@ -4,7 +4,8 @@ import {
   Folder, FileText, Sparkles, X, ArrowUpRight, Code2, Send, Bot, UserRound,
   ChevronRight, Clock3, Download, PanelsTopLeft, Globe, Image as ImageIcon,
   CircleHelp, Maximize2, Minimize2
-} from "lucide-react";\nimport JDMatcher from "./components/JDMatcher";
+} from "lucide-react";
+import JDMatcher from "./components/JDMatcher";
 
 type WindowName = "about" | "projects" | "resume" | "ask" | "contact" | "jd";
 type ChatMessage = { role: "user" | "assistant"; content: string };
@@ -48,7 +49,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [chatError, setChatError] = useState("");
   const [now, setNow] = useState(new Date());
-  const [maximized, setMaximized] = useState(false);\n  const [chatEnd, setChatEnd] = useState<HTMLDivElement | null>(null);
+  const [maximized, setMaximized] = useState(false);
+  const [chatEnd, setChatEnd] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 1000);
@@ -90,7 +92,8 @@ export default function App() {
     }
   };
 
-  const openVideo = (project: typeof projects[number]) => { if ("video" in project && project.video) window.open(project.video, "_blank", "noopener,noreferrer"); };\n  const openResume = () => window.open("/files/resume.pdf", "_blank", "noopener,noreferrer");
+  const openVideo = (project: typeof projects[number]) => { if ("video" in project && project.video) window.open(project.video, "_blank", "noopener,noreferrer"); };
+  const openResume = () => window.open("/files/resume.pdf", "_blank", "noopener,noreferrer");
   const downloadResume = () => {
     const anchor = document.createElement("a");
     anchor.href = "/files/resume.pdf";
@@ -148,7 +151,9 @@ export default function App() {
       <p className="footnote">Each project opens its verified live deployment in a new tab.</p>
     </WindowFrame>;
 
-    if (name === "jd") return <WindowFrame title="Job Description Match" icon={<FileUp size={17}/>} onClose={() => close(name)} className="content-window jd-window"><div className="section-heading"><div><span className="eyebrow">RESUME-TO-ROLE ANALYSIS</span><h2>Check the fit<span className="accent">.</span></h2></div><span className="count-pill">JD MATCH</span></div><JDMatcher /></WindowFrame>;\n\n    if (name === "resume") return <WindowFrame title="Resume.pdf" icon={<FileText size={17}/>} onClose={() => close(name)} className="content-window resume-window">
+    if (name === "jd") return <WindowFrame title="Job Description Match" icon={<FileUp size={17}/>} onClose={() => close(name)} className="content-window jd-window"><div className="section-heading"><div><span className="eyebrow">RESUME-TO-ROLE ANALYSIS</span><h2>Check the fit<span className="accent">.</span></h2></div><span className="count-pill">JD MATCH</span></div><JDMatcher /></WindowFrame>;
+
+    if (name === "resume") return <WindowFrame title="Resume.pdf" icon={<FileText size={17}/>} onClose={() => close(name)} className="content-window resume-window">
       <div className="resume-toolbar"><span><FileText size={16}/> Kartik-Sahu-Resume.pdf</span><div className="resume-actions"><button className="small-action" onClick={openResume}><ExternalLink size={15}/> Open in new tab</button><button className="small-action accent-action" onClick={downloadResume}><Download size={15}/> Download PDF</button></div></div>
       <div className="resume-empty"><FileText size={38}/><h2>Your resume PDF goes here</h2><p>Place your verified resume in <code>frontend/public/files/resume.pdf</code>. The Resume shortcut will then open this PDF in a new browser tab and enable downloads.</p></div>
     </WindowFrame>;
