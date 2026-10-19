@@ -50,8 +50,9 @@ export default function JDMatcher() {
       if (jd.length < 80) throw new Error("This job description looks too short. Upload a text-based PDF or paste the full JD.");
       const lower = jd.toLowerCase();
       const requiredSkills = portfolioSkills.filter(skill => lower.includes(skill.toLowerCase()));
-      const matched = requiredSkills.filter(skill => evidence.some(item => item.toLowerCase() === skill.toLowerCase()));
-      const unverified = requiredSkills.filter(skill => !matched.includes(skill));
+      const documentedSkills = new Set(evidence.map(item => item.toLowerCase()));
+      const matched = requiredSkills.filter(skill => documentedSkills.has(skill.toLowerCase()));
+      const unverified = requiredSkills.filter(skill => !documentedSkills.has(skill.toLowerCase()));
       const capabilityTerms = ["frontend", "back-end", "backend", "full-stack", "full stack", "api", "database", "payments", "ai", "retrieval", "responsive", "state management"];
       const evidencedCapabilities = evidence.filter(item => capabilityTerms.some(term => item.toLowerCase().includes(term)) && lower.includes(item.toLowerCase()));
       const score = Math.round((matched.length / Math.max(1, requiredSkills.length)) * 100);
