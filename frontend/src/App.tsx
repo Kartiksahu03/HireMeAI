@@ -80,7 +80,7 @@ export default function App() {
     setChatError("");
     setLoading(true);
     try {
-      const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\\/$/, "");
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
       const response = await fetch(`${apiBase}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
